@@ -106,7 +106,7 @@ public class CoolWeatherDB {
      * 将 couty 实例储存到数据库
      * @param county
      */
-    public void saveCity(County county){
+    public void saveCounty(County county){
         if(county!=null){
             ContentValues cv = new ContentValues();
             cv.put("county_name",county.getCounty_name());
@@ -118,7 +118,7 @@ public class CoolWeatherDB {
     /**
      * 从数据库读取某城市下所有的县信息
      */
-    public List<County> loadcounties(int cityId){
+    public List<County> loadCounties(int cityId){
         List<County> list = new ArrayList<>();
         Cursor cursor = db.query("county",null,"city_id=?",new String[]{(cityId+"")},null,null,null);
         if(cursor.moveToFirst()){
