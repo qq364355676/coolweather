@@ -1,6 +1,7 @@
 package com.my.coolweather.util;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.my.coolweather.bean.City;
 import com.my.coolweather.bean.County;
@@ -44,6 +45,8 @@ public class Utility {
                     city.setCity_code(array[0]);
                     city.setCity_name(array[1]);
                     city.setProvince_id(provinceId);
+//                    Log.i("TAG","city.getCity_code()= "+city.getCity_code());
+//                    Log.i("TAG","city.getCity_name()= "+city.getCity_name());
                     coolWeatherDB.saveCity(city);
                 }
                 return true;

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -52,9 +53,9 @@ public class ChooseAreaActivity extends Activity{
         titleText = (TextView)findViewById(R.id.title_text);
         listView = (ListView) findViewById(R.id.list_view);
         coolWeatherDB = CoolWeatherDB.getInstance(this);
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,dataList);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,dataList);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (currentLevel == LEVEL_PROVINCE) {
@@ -103,9 +104,8 @@ public class ChooseAreaActivity extends Activity{
             titleText.setText(selectedProvince.getProvince_name());
             currentLevel = LEVEL_CITY;
         }else{
-            queryFromServer(selectedProvince.getProvince_code(),"city");
+            queryFromServer(selectedProvince.getProvince_code(), "city");
         }
-
     }
 
     /**
@@ -113,6 +113,7 @@ public class ChooseAreaActivity extends Activity{
      */
     private void queryCounties() {
         countyList = coolWeatherDB.loadCounties(selectedCity.getId());
+
         if (countyList.size()>0){
             dataList.clear();
             for (County county : countyList){
@@ -121,7 +122,6 @@ public class ChooseAreaActivity extends Activity{
             adapter.notifyDataSetChanged();
             listView.setSelection(0);
             currentLevel = LEVEL_COUNTY;
-
         }else{
             queryFromServer(selectedCity.getCity_code(),"county");
         }
@@ -147,7 +147,6 @@ public class ChooseAreaActivity extends Activity{
                 boolean result = false;
                 if("province".equals(type)){
                     result = Utility.handleProvincesResponse(coolWeatherDB,response);
-
                 }else if ("city".equals(type)){
                     result = Utility.handleCitiesResponse(coolWeatherDB,response,selectedProvince.getId());
                 }else if("county".equals(type)){
@@ -208,7 +207,6 @@ public class ChooseAreaActivity extends Activity{
      */
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         if (currentLevel == LEVEL_COUNTY){
             queryCities();
         }else if(currentLevel == LEVEL_CITY){
