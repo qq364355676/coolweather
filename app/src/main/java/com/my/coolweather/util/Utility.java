@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.my.coolweather.bean.City;
 import com.my.coolweather.bean.County;
@@ -55,8 +54,6 @@ public class Utility {
                     city.setCity_code(array[0]);
                     city.setCity_name(array[1]);
                     city.setProvince_id(provinceId);
-//                    Log.i("TAG","city.getCity_code()= "+city.getCity_code());
-//                    Log.i("TAG","city.getCity_name()= "+city.getCity_name());
                     coolWeatherDB.saveCity(city);
                 }
                 return true;
@@ -89,7 +86,7 @@ public class Utility {
      */
     public static void handleWeatherResponse(Context context,String response){
         try {
-            JSONObject jsonObject = new JSONObject(response);Log.i("TAG","天气:"+jsonObject.toString());
+            JSONObject jsonObject = new JSONObject(response);
             JSONObject weatherinfo = jsonObject.getJSONObject("weatherinfo");
             String city = weatherinfo.getString("city");
             String cityCode = weatherinfo.getString("cityid");
