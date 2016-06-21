@@ -89,22 +89,22 @@ public class Utility {
             JSONObject jsonObject = new JSONObject(response);
             JSONObject weatherinfo = jsonObject.getJSONObject("weatherinfo");
             String city = weatherinfo.getString("city");
-            String cityCode = weatherinfo.getString("cityid");
+            String weatherCode = weatherinfo.getString("cityid");
             String temp1 = weatherinfo.getString("temp1");
             String temp2 = weatherinfo.getString("temp2");
             String weather = weatherinfo.getString("weather");
             String ptime = weatherinfo.getString("ptime");
-            saveWeatherInfo(context,city,cityCode,temp1,temp2,weather,ptime);
+            saveWeatherInfo(context,city,weatherCode,temp1,temp2,weather,ptime);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private static void saveWeatherInfo(Context context, String city, String cityCode, String temp1, String temp2, String weather, String ptime) {
+    private static void saveWeatherInfo(Context context, String city, String weatherCode, String temp1, String temp2, String weather, String ptime) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日HH时", Locale.CHINA);
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putString("city_name",city);
-        editor.putString("city_code",cityCode);
+        editor.putString("weather_code",weatherCode);
         editor.putString("temp1",temp1);
         editor.putString("temp2",temp2);
         editor.putString("weather",weather);

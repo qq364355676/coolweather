@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.my.coolweather.R;
+import com.my.coolweather.service.AutoUpdateService;
 import com.my.coolweather.util.HttpCallbackListener;
 import com.my.coolweather.util.HttpUtil;
 import com.my.coolweather.util.Utility;
@@ -83,9 +84,6 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
                         String[] array = response.split("\\|");
                         if (array != null && array.length == 2) {
                             String weatherCode = array[1];
-                            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this).edit();
-                            editor.putString("weather_code",weatherCode);
-                            editor.commit();
                             queryWeatherInfo(weatherCode);
                         }
                     }
@@ -117,9 +115,11 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
         temp2.setText(prefs.getString("temp2",""));
         weather.setText(prefs.getString("weather", ""));
         publishDate.setText("今天"+prefs.getString("ptime","")+"发布");
-        currentDate.setText(prefs.getString("current_date",""));
+        currentDate.setText(prefs.getString("current_date", ""));
         weatherInfoLayout.setVisibility(View.VISIBLE);
         cityName.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
     }
 
     @Override
